@@ -1,7 +1,7 @@
 #!/bin/bash
 # Author: L0RE
 # This Script Generates a new Inventory for a new Version or New Plugin
-REPO=/root/X-Repo/
+REPO=/root/reposity.streamon/
 if [ "$1" != "" ]
 then
     REPO="$1"
