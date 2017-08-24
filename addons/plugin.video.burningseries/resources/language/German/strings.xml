@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+  <string id="32001">Einstellungen</string>
+  <string id="30101">Hosterlist</string>
+  <string id="30102">Serien Ordner</string>
+  <string id="30103">API vollenden</string>
+  <string id="30104">import/export Ordner</string>
+  <string id="30105">Watched-Datei importieren</string>
+  <string id="30106">aktualisiere Suchliste</string>
+  <string id="30107">watched Farbe hex AARRGGBB</string>
+  <string id="30108">Watched-Datei exportieren</string>
+</strings>

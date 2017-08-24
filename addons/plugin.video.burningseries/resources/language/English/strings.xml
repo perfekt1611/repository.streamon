@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+  <string id="32001">Hoster Preference</string>
+  <string id="30101">Hosterlist</string>
+  <string id="30102">Series folder</string>
+  <string id="30103">Finish API</string>
+  <string id="30104">import/export folder</string>
+  <string id="30105">import watched</string>
+  <string id="30106">refresh Searchlist</string>
+  <string id="30107">watched Color hex AARRGGBB</string>
+  <string id="30108">export watched</string>
+</strings>
