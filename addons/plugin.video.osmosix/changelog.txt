@@ -1,5 +1,15 @@
+1.3.2
+  Add option to create TV-Shows Sublist
 1.3.0
   MYSQL support
+  In den Osmosis-Einstellungen musst du bei der
+	-> Kodi-Datenbank dein MyVideosXX
+	-> Filme-Datenbank dein OsmosisMovies (oder anderer Name)
+	-> Serien-Datenbank dein OsmosisSerien (oder anderer Name)
+  eintragen.
+  Osmosix legt dann in seine Datenbanken die Referenzen für die Streams ab, die Kodi-Datenbank
+  (welche die strms Dateien enthält und so Filme anzeigt) verweist beim Abspielen dann auf Osmosix
+  der dann aus seiner Datenbank die passende Referenz raussucht und abspielt.
 1.2.9
   Maven85 Add SkyGo extension
   Maven85 Change the condition for displaying addons

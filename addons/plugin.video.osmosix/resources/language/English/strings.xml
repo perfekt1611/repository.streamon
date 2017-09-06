@@ -13,6 +13,7 @@
     <string id="31002">Paging depth for Movies</string>
     <string id="32100">Service</string>
     <string id="33001">Update at startup</string>
+    <string id="31006">Number of glitches from a serie (series)</string>
     <string id="33002">Automatic Update</string>
     <string id="33003">Update Every (Hours)</string>
     <string id="33004">Force Update at(0:0 to disable): </string>
