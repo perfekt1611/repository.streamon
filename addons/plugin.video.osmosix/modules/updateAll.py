@@ -44,9 +44,9 @@ ADDON_PATH = REAL_SETTINGS.getAddonInfo('path')
 ADDON_SETTINGS = REAL_SETTINGS.getAddonInfo('profile')
 # PC Settings Info
 MediaList_LOC = xbmc.translatePath(os.path.join(ADDON_SETTINGS, 'MediaList.xml'))
-Automatic_Update_Time = REAL_SETTINGS.getSetting('Automatic_Update_Time') 
+Automatic_Update_Time = REAL_SETTINGS.getSetting('Automatic_Update_Time')
 represent = os.path.join(ADDON_PATH, 'icon.png')
-itime = 900000000000000  # in miliseconds  
+itime = 900000000000000  # in miliseconds
 
 def readMediaList(purge=False):
     try:
@@ -58,9 +58,7 @@ def readMediaList(purge=False):
     except:
         pass
 
-
 def strm_update():
-   
     try:
         if xbmcvfs.exists(MediaList_LOC):
             thelist = readMediaList()
@@ -79,10 +77,10 @@ def strm_update():
                             module = moduleUtil.getModule(plugin_id.group(1))
                             if module and hasattr(module, 'update'):
                                 url = module.update(name, url, 'video', thelist)
-    
+
                         dialogeBG.update( j, "osmosix total update process: " , "Current Item: " + name.replace('++RenamedTitle++','') + " Items left: " + str(listLen) )
                         j = j + 100 / len(thelist)
-    
+
                         create.fillPluginItems(url, strm=True, strm_name=name, strm_type=cType)
                         listLen -= 1
                     except:

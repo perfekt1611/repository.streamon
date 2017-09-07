@@ -55,8 +55,8 @@ REAL_SETTINGS = xbmcaddon.Addon(id=addon_id)
 ADDON_SETTINGS = REAL_SETTINGS.getAddonInfo('profile')
 MediaList_LOC = xbmc.translatePath(os.path.join(ADDON_SETTINGS,'MediaList.xml'))
 PAGINGTVshows = REAL_SETTINGS.getSetting('paging_tvshows')
-PAGINGMovies = REAL_SETTINGS.getSetting('paging_movies')
 PAGINGTVshowsSublist = REAL_SETTINGS.getSetting('paging_tvshows_sublist')
+PAGINGMovies = REAL_SETTINGS.getSetting('paging_movies')
 STRM_LOC = xbmc.translatePath(os.path.join(ADDON_SETTINGS,'STRM_LOC'))
 profile = xbmc.translatePath(addon.getAddonInfo('profile').decode('utf-8'))
 home = xbmc.translatePath(addon.getAddonInfo('path').decode('utf-8'))
@@ -421,7 +421,7 @@ def getTVShowFromList(showList, strm_name='', strm_type='Other', pagesDone=0):
                     if season > -1 and episode > -1 and filetype == 'file': 
                         episodesList.append(detailInfo)
                 
-            step = float(100.0 / len(episodesList) if len(episodesList) > 0 else 1)        
+            step = float(100.0 / len(episodesList) if len(episodesList) > 0 else 1)
             if pagesDone == 0:
                 thisDialog.dialogeBG.update(int(step), "Initialisation of TV-Shows: " + stringUtils.getStrmname(strm_name))
             else:
