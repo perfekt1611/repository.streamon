@@ -71,7 +71,7 @@ KMODBPASSWORD = REAL_SETTINGS.getSetting('KMovie-DB password')
 KMODBNAME = REAL_SETTINGS.getSetting('KMovie-DB name')
 KMODBPATH = xbmc.translatePath(REAL_SETTINGS.getSetting('KMovie-DB path'))
 KMODBIP = REAL_SETTINGS.getSetting('KMovie-DB IP')
-KMODBPORT = REAL_SETTINGS.getSetting('KMovi-DB port')
+KMODBPORT = REAL_SETTINGS.getSetting('KMovie-DB port')
 
 profile = xbmc.translatePath(addon.getAddonInfo('profile').decode('utf-8'))
 home = xbmc.translatePath(addon.getAddonInfo('path').decode('utf-8'))
