@@ -35,7 +35,7 @@
         <setting label="35003" type="text" id="Music-DB name" />
         <setting label="35004" type="file" id="Music-DB path" source="auto" default=""/>
         <setting label="35005" type="ipaddress" id="Music-DB IP" default="localhost"/>
-        <setting label="35006" type="ipaddress" id="Music-DB port" default="3306"/>
+        <setting label="35006" type="number" id="Music-DB port" default="3306"/>
     </category>
     <category label="36000">
       	<setting label="36001" type="text" id="Movies-DB username" />
@@ -51,6 +51,6 @@
         <setting label="37003" type="text" id="TV-Show-DB name" />
         <setting label="37004" type="folder" id="TV-Show-DB path" source="auto" default=""/>
         <setting label="37005" type="ipaddress" id="TV-Show-DB IP" default="localhost"/>
-        <setting label="37006" type="ipaddress" id="TV-Show-DB port" default="3306"/>
+        <setting label="37006" type="number" id="TV-Show-DB port" default="3306"/>
     </category>
 </settings>
