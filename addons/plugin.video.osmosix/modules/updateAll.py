@@ -3,7 +3,7 @@
 #
 # This file is part of osmosix
 #
-# osmosix is free software: you can redistribute it. 
+# osmosix is free software: you can redistribute it.
 # You can modify it for private use only.
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -59,6 +59,7 @@ def readMediaList(purge=False):
         pass
 
 def strm_update():
+
     try:
         if xbmcvfs.exists(MediaList_LOC):
             thelist = readMediaList()

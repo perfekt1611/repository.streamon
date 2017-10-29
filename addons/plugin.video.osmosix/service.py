@@ -52,9 +52,11 @@ itime = 5000000000  # in miliseconds
 guiFix = False 
    
 if __name__ == "__main__":
+    guiFix = updateAll.guIFix(guiFix)
     if Updat_at_startup == "true":
+        guiFix = updateAll.guIFix(guiFix)        
         updateAll.strm_update()
-
+       
     monitor = xbmc.Monitor()
     while not monitor.abortRequested():
         # Sleep/wait for abort for 10 seconds
@@ -68,12 +70,13 @@ if __name__ == "__main__":
             Automatic_Update_Time = REAL_SETTINGS.getSetting('Automatic_Update_Time')
             Automatic_Update_Run = REAL_SETTINGS.getSetting('Automatic_Update_Run')
             toseconds = toseconds + 10.0
-
+            
             if ((toseconds >= float(Automatic_Update_Time) * 60 * 60)):
                 guiFix = updateAll.guIFix(guiFix)
                 updateAll.strm_update()
                 toseconds = 0.0
                 monitor.waitForAbort(60)
         elif (time.strftime("%H:%M") == Timed_Update_Run) and Timed_Update_Run != "0:00":
+            guiFix = updateAll.guIFix(guiFix)
             updateAll.strm_update()
             monitor.waitForAbort(60)
