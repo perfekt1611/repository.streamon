@@ -3,7 +3,7 @@
 #
 # This file is part of osmosix
 #
-# osmosix is free software: you can redistribute it.
+# osmosix is free software: you can redistribute it. 
 # You can modify it for private use only.
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -44,9 +44,11 @@ ADDON_PATH = REAL_SETTINGS.getAddonInfo('path')
 ADDON_SETTINGS = REAL_SETTINGS.getAddonInfo('profile')
 # PC Settings Info
 MediaList_LOC = xbmc.translatePath(os.path.join(ADDON_SETTINGS, 'MediaList.xml'))
-Automatic_Update_Time = REAL_SETTINGS.getSetting('Automatic_Update_Time')
+Automatic_Update_Time = REAL_SETTINGS.getSetting('Automatic_Update_Time') 
+supportES = REAL_SETTINGS.getSetting('supportES') 
 represent = os.path.join(ADDON_PATH, 'icon.png')
-itime = 900000000000000  # in miliseconds
+itime = 900000000000000  # in miliseconds  
+guiFix = False
 
 def readMediaList(purge=False):
     try:
@@ -58,8 +60,16 @@ def readMediaList(purge=False):
     except:
         pass
 
-def strm_update():
+def guIFix(bVal):
+    if supportES == "false":
+        return True
+    if not bVal:
+    # Sleep/wait for to avoid freeze
+        return guiTools.checkGuiA() 
 
+def strm_update():
+    guIFix(False)
+   
     try:
         if xbmcvfs.exists(MediaList_LOC):
             thelist = readMediaList()
@@ -78,10 +88,10 @@ def strm_update():
                             module = moduleUtil.getModule(plugin_id.group(1))
                             if module and hasattr(module, 'update'):
                                 url = module.update(name, url, 'video', thelist)
-
+    
                         dialogeBG.update( j, "osmosix total update process: " , "Current Item: " + name.replace('++RenamedTitle++','') + " Items left: " + str(listLen) )
                         j = j + 100 / len(thelist)
-
+    
                         create.fillPluginItems(url, strm=True, strm_name=name, strm_type=cType)
                         listLen -= 1
                     except:
