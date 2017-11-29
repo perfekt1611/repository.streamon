@@ -29,7 +29,6 @@ import urllib, urllib2, cookielib, requests
 
 from BeautifulSoup import BeautifulStoneSoup, BeautifulSoup, BeautifulSOAP
 import SimpleDownloader as downloader
-import pyxbmct
 import utils
 import xbmc
 import xbmcplugin, xbmcgui, xbmcaddon, xbmcvfs
@@ -102,14 +101,17 @@ def addFunction(labels= 'n.a' ):
         except:#          
             pass
             
-def addDir(name,url,mode,iconimage,fanart,plot,genre,date,credits,showcontext=False):
+def addDir(name,url,mode,art,plot,genre,date,credits,showcontext=False):
     utils.addon_log('addDir')
-    u=sys.argv[0]+"?url="+urllib.quote_plus(stringUtils.uni(url))+"&mode="+str(mode)+"&name="+urllib.quote_plus(stringUtils.uni(name))+"&fanart="+urllib.quote_plus(fanart)
+    u=sys.argv[0]+"?url="+urllib.quote_plus(stringUtils.uni(url))+"&mode="+str(mode)+"&name="+urllib.quote_plus(stringUtils.uni(name))+"&fanart="+urllib.quote_plus(art.get('fanart',''))
     ok=True
     contextMenu = []
-    liz=xbmcgui.ListItem(name, iconImage=iconimage, thumbnailImage=iconimage)
+    thumbArt = art.get('thumb',None)
+    if thumbArt == None:
+        thumbArt = art.get('fanart',None)
+    liz=xbmcgui.ListItem(name, iconImage=thumbArt, thumbnailImage=thumbArt)
     liz.setInfo(type="Video", infoLabels={ "Title": name, "Plot": plot, "Genre": genre, "dateadded": date, "credits": credits })
-    liz.setProperty("Fanart_Image", fanart)
+    liz.setArt(art)
     contextMenu.append(('Create Strms','XBMC.RunPlugin(%s&mode=200&name=%s)'%(u, name)))
     liz.addContextMenuItems(contextMenu)
     try:
@@ -119,25 +121,31 @@ def addDir(name,url,mode,iconimage,fanart,plot,genre,date,credits,showcontext=Fa
     
     return ok
       
-def addLink(name,url,mode,iconimage,fanart,plot,genre,date,showcontext,playlist,regexs,total,setCookie=""): 
+def addLink(name,url,mode,art,plot,genre,date,showcontext,playlist,regexs,total,setCookie=""): 
     utils.addon_log('addLink') 
-    u=sys.argv[0]+"?url="+urllib.quote_plus(stringUtils.uni(url))+"&mode="+str(mode)+"&name="+urllib.quote_plus(stringUtils.uni(name))+"&fanart="+urllib.quote_plus(fanart)
+    u=sys.argv[0]+"?url="+urllib.quote_plus(stringUtils.uni(url))+"&mode="+str(mode)+"&name="+urllib.quote_plus(stringUtils.uni(name))+"&fanart="+urllib.quote_plus(art.get('fanart',''))
     ok = True
     contextMenu =[]
-    liz=xbmcgui.ListItem(name, iconImage=iconimage, thumbnailImage=iconimage)
+    thumbArt = art.get('thumb',None)
+    if thumbArt == None:
+        thumbArt = art.get('fanart',None)
+    liz=xbmcgui.ListItem(name, iconImage=thumbArt, thumbnailImage=thumbArt)
     liz.setInfo(type="Video", infoLabels={ "Title": name, "Plot": plot, "Genre": genre, "dateadded": date })
-    liz.setProperty("Fanart_Image", fanart)
+    liz.setArt(art)
     liz.setProperty('IsPlayable', 'true')
     contextMenu.append(('Create Strm','XBMC.RunPlugin(%s&mode=200&name=%s&filetype=file)'%(u, name)))
     liz.addContextMenuItems(contextMenu)
+    xbmcplugin.setContent(int(sys.argv[1]), 'movies')
     ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,totalItems=total)
     return ok
 
 def getSources():
     utils.addon_log('getSources')
-    addDir('Video Plugins', 'video', 1, folderIcon, FANART, 'description', 'genre', 'date', 'credits')
-    addDir('Music Plugins', 'audio', 1, folderIcon, FANART, 'description', 'genre', 'date', 'credits')
-    addDir('UPNP Servers', 'upnp://', 2, folderIcon, FANART, 'description', 'genre', 'date', 'credits')
+    xbmcplugin.setContent(int(sys.argv[1]), 'movies')
+    art = {'fanart': FANART, 'thumb': folderIcon}
+    addDir('Video Plugins', 'video', 1, art, 'description', 'genre', 'date', 'credits')
+    addDir('Music Plugins', 'audio', 1, art, 'description', 'genre', 'date', 'credits')
+    addDir('UPNP Servers', 'upnp://', 2, art, 'description', 'genre', 'date', 'credits')
     addFunction('Update')
     addItem(labels="Remove Media")
     #ToDo Add label
@@ -178,7 +186,6 @@ def editDialog(nameToChange):
 #Before executing the code below we need to know the movie original title (string variable originaltitle) and the year (string variable year). They can be obtained from the infolabels of the listitem. The code filters the database for items with the same original title and the same year, year-1 and year+1 to avoid errors identifying the media.
 def markMovie(movID, pos, total, done):
     if done:
-        #int(100 * float(pos)/ float(total)) >= 95
         try:
             xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.SetMovieDetails", "params": {"movieid" : %s, "playcount" : 1 }, "id": 1 }' % movID)
             xbmc.executebuiltin("XBMC.Container.Refresh")
@@ -186,7 +193,7 @@ def markMovie(movID, pos, total, done):
             print("markMovie: Movie not in DB!?")
             pass  
     else:    
-        if xbmc.getCondVisibility('Library.HasContent(Movies)'):
+        if xbmc.getCondVisibility('Library.HasContent(Movies)') and pos > 0 and total > 0:
             try:
                 xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.SetMovieDetails", "params": {"movieid" : %s, "resume" : {"position":%s,"total":%s} }, "id": 1 }' % (movID, pos, total))
                 xbmc.executebuiltin("XBMC.Container.Refresh")
@@ -194,7 +201,7 @@ def markMovie(movID, pos, total, done):
                 print("markMovie: Movie not in DB!?")
                 pass
 
-def markSeries(sShowTitle,sEpisode,sSeason,shoID,pos,total,done):
+def markSeries(shoID, pos, total, done):
     if done:
         try:
             xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.SetEpisodeDetails", "params": {"episodeid" : %s, "playcount" : 1 }, "id": 1 }' % shoID)
@@ -203,13 +210,13 @@ def markSeries(sShowTitle,sEpisode,sSeason,shoID,pos,total,done):
             print("markMovie: Episode not in DB!?")
             pass
     else:    
-        if xbmc.getCondVisibility('Library.HasContent(TVShows)'):
+        if xbmc.getCondVisibility('Library.HasContent(TVShows)') and pos > 0 and total > 0:
             try:
                 xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.SetEpisodeDetails", "params": {"episodeid" : %s, "resume" : {"position":%s,"total":%s} }, "id": 1 }' % (shoID, pos, total))
                 xbmc.executebuiltin("XBMC.Container.Refresh")
             except:
-			    print("markSeries: Show not in DB!?")
-			    pass
+                print("markSeries: Show not in DB!?")
+                pass
 # Functions not in usee yet:
 def handle_wait(time_to_wait, header, title):
     dlg = xbmcgui.DialogProgress()
@@ -261,9 +268,3 @@ def yesnoDialog(str1, str2='', header=ADDON_NAME, yes='', no=''):
 def browse(type, heading, shares, mask='', useThumbs=False, treatAsFolder=False, path='', enableMultiple=False):
     retval = xbmcgui.Dialog().browse(type, heading, shares, mask, useThumbs, treatAsFolder, path, enableMultiple)
     return retval
-
-def checkGuiA():
-    try:
-        return True
-    except:
-        pass

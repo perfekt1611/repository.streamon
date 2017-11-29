@@ -20,7 +20,6 @@ import os, re
 from BeautifulSoup import BeautifulStoneSoup, BeautifulSoup, BeautifulSOAP
 import SimpleDownloader as downloader
 from modules import stringUtils
-import pyxbmct
 import utils
 import xbmc, xbmcplugin, xbmcgui, xbmcaddon, xbmcvfs
 
@@ -70,7 +69,7 @@ def requestItem(file, fletype='video'):
     if file.find("playMode=play")== -1:
         return requestList(file, fletype)
 
-    json_query = ('{"jsonrpc":"2.0","method":"Player.GetItem","params":{"playerid":1,"properties":["thumbnail","fanart","title","year","mpaa","imdbnumber","description","season","episode","playcount","genre","duration","runtime","showtitle","album","artist","plot","plotoutline","tagline","tvshowid"]}, "id": 1}')
+    json_query = ('{"jsonrpc":"2.0","method":"Player.GetItem","params":{"playerid":1,"properties":["art","title","year","mpaa","imdbnumber","description","season","episode","playcount","genre","duration","runtime","showtitle","album","artist","plot","plotoutline","tagline","tvshowid"]}, "id": 1}')
     return sendJSON(json_query)
           
 def requestList(path, fletype='video'):
@@ -78,7 +77,7 @@ def requestList(path, fletype='video'):
     if path.find("playMode=play")!= -1:
         return requestItem(path, fletype)
 
-    json_query = ('{"jsonrpc": "2.0", "method": "Files.GetDirectory", "params": {"directory": "%s", "media": "%s", "properties":["thumbnail","fanart","title","year","track","mpaa","imdbnumber","description","season","episode","playcount","genre","duration","runtime","showtitle","album","artist","plot","plotoutline","tagline","tvshowid"]}, "id": 1}' % (path, fletype))
+    json_query = ('{"jsonrpc": "2.0", "method": "Files.GetDirectory", "params": {"directory": "%s", "media": "%s", "properties":["art","title","year","track","mpaa","imdbnumber","description","season","episode","playcount","genre","duration","runtime","showtitle","album","artist","plot","plotoutline","tagline","tvshowid"]}, "id": 1}' % (path, fletype))
     return sendJSON(json_query)
 
 def sendJSON(command):
@@ -87,4 +86,4 @@ def sendJSON(command):
         data = xbmc.executeJSONRPC(stringUtils.uni(command))
     except UnicodeEncodeError:
         data = xbmc.executeJSONRPC(stringUtils.asciis(command))
-    return json.loads(data.decode('utf-8')).get('result', [])
+    return json.loads(data.decode('utf-8')).get('result', {})
