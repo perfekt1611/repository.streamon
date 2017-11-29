@@ -126,12 +126,13 @@ def get_metahandler():
         return False
 
 def parseUrl():
+# remove fix for osmosis
 #    import urlparse
 #    netloc = [urlparse.urlparse(sys.argv[0]).netloc, '']
 #    if xbmc.getInfoLabel('Container.PluginName') not in netloc:
 #        sys.exit()
 #        return
-#	
+	
     params = ParameterHandler()
     logger.info(params.getAllParameters())
     # If no function is set, we set it to the default "load" function

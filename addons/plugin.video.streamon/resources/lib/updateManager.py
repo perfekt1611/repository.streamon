@@ -124,4 +124,3 @@ def _getXmlString(xml_url):
             logger.info("Update-URL incorrect")
     except Exception as e:
         logger.info(e)
-
