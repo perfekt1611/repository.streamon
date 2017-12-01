@@ -47,7 +47,7 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.osmosix" name="osmosix" version="1.4.0" provider-name="Stereodruid">
+<addon id="plugin.video.osmosix" name="osmosix" version="1.4.1" provider-name="Stereodruid">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0" />
 		<import addon="script.module.t0mm0.common" version="2.0.0" />
@@ -106,7 +106,7 @@
 	</extension>
 </addon>
 
-<addon id="plugin.video.streamon" name="streamon" version="3.4.3" provider-name="xstream-Team (originator: Lynx187, murphy, MaxMustermann)">
+<addon id="plugin.video.streamon" name="streamon" version="3.4.4" provider-name="xstream-Team (originator: Lynx187, murphy, MaxMustermann)">
  <requires>
    <import addon="xbmc.python"                 version="2.14.0"/>
    <import addon="repository.streamon"          version="1.0.0" />

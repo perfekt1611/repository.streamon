@@ -58,7 +58,7 @@ def readMediaList(purge=False):
     except:
         pass
 
-def strm_update():
+def strm_update(selectedItems=None):
     try:
         if xbmcvfs.exists(MediaList_LOC):
             thelist = readMediaList()
@@ -66,9 +66,12 @@ def strm_update():
                 dialogeBG = xbmcgui.DialogProgressBG()
                 dialogeBG.create("osmosix: " ,  'Total Update-Progress:')
 
-                listLen = len(thelist)
+                listLen = len(thelist) if selectedItems is None else len(selectedItems)
                 j = 100 / len(thelist)
                 for i in range(len(thelist)):
+                    if selectedItems is not None and i not in selectedItems:
+                        continue
+
                     try:
                         cType , name, url = (thelist[i]).strip().split('|', 3)
                     except ValueError:
@@ -94,7 +97,7 @@ def strm_update():
     except ValueError:
         print ("No valid integer in line.")
     except:
-        guiTools.infoDialog("Unexpected error: " + str(sys.exc_info()[1])+ (". Se your Kodi.log!"))
+        guiTools.infoDialog("Unexpected error: " + str(sys.exc_info()[1])+ (". See your Kodi.log!"))
         utils.addon_log(("Unexpected error: ") + str(sys.exc_info()[1]))
         print ("Unexpected error:"), sys.exc_info()[1]
         pass
