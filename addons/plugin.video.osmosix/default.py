@@ -76,7 +76,7 @@ def getAndMarkResumePoint(props, isTVShow):
             xbmc.Player().seekTime(int(urlsResumePoint[0]) - 5)
 
     watched = 0
-    while xbmc.Player().isPlaying():
+    while xbmc.Player().isPlaying():                
         watched = xbmc.Player().getTime() * 100 / xbmc.Player().getTotalTime()
         time.sleep(1)
 
@@ -248,8 +248,8 @@ if __name__ == "__main__":
     elif mode == 666:
         updateAll.strm_update() 
     elif mode == 4:
-        selectedItems, items = create.getMediaListDialog()
-        if selectedItems and len(selectedItems) > 0:
+        selectedItems = create.getMediaListDialog()
+        if selectedItems is not None:
             updateAll.strm_update(selectedItems)
     elif mode == 5:
         create.removeItemsFromMediaList('list')
@@ -282,7 +282,7 @@ if __name__ == "__main__":
             infoLabels = {}
             if mediaType:
                 if mediaType == 'show':
-                    sTVShowTitle = sys.argv[0][sys.argv[0].index('|') + 1:]
+                    sTVShowTitle = sys.argv[0][sys.argv[0].index('|') + 1:] 
                     sTVShowTitle = stringUtils.unicodetoascii(sTVShowTitle)
                     iSeason = int(episode[1:episode.index('e')])
                     iEpisode = int(episode[episode.index('e') + 1:])
